@@ -1,16 +1,19 @@
 $(function() {
 	$('.progressbar').each(function(){
-		var t = $(this),
-			dataperc = t.attr('data-perc'),
-			barperc = Math.round(dataperc*5.56);
-		t.find('.bar').animate({width:barperc}, dataperc*100);
-		t.find('.label').append('<div class="perc"></div>');
+		var t = $(this);
+		var bar = t.find('.bar').first();
+		var label = t.find('.label').first();
+		var total = parseInt(t.css('width'))-4;
+		bar.animate({width:.2*total}, 2500);
+		label.append('<div class="perc"></div>');
 
 		function perc() {
+			console.debug(total)
 			var length = t.find('.bar').css('width'),
-				perc = Math.round(parseInt(length)/5.56),
+				perc = Math.round((100*parseInt(length))/total),
 				labelpos = (parseInt(length)-2);
-			t.find('.label').css('left', labelpos);
+
+			label.css('left', labelpos);
 			t.find('.perc').text(perc+'%');
 		}
 		perc();
